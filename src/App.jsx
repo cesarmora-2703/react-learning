@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>The road to react</h1>
     </>
   )
 }
