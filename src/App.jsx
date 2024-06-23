@@ -29,6 +29,29 @@ function getText(text) {
   return text;
 }
 
+function List() {
+  return (
+    <div>
+      <ul>
+        {list1.map(function (item) {
+          return (
+            <>
+              <li key={item.objectID}>
+                <span>
+                  <a href={item.url}>{item.title}</a>
+                </span>
+                <span> {item.author} </span>
+                <span> {item.num_comments} </span>
+                <span> {item.points} </span>
+              </li>
+            </>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -41,24 +64,7 @@ function App() {
       <label htmlFor="Search">Search: </label>
       <input id="search" type="text" placeholder="Fill the data" />
       <hr />
-      <div>
-        <ul>
-          {list1.map(function (item) {
-            return (
-              <>
-                <li key={item.objectID}>
-                  <span>
-                    <a href={item.url}>{item.title}</a>
-                  </span>
-                  <span> {item.author} </span>
-                  <span> {item.num_comments} </span>
-                  <span> {item.points} </span>
-                </li>
-              </>
-            );
-          })}
-        </ul>
-      </div>
+      <List />
       <div>
         <button
           onClick={(e) => {
