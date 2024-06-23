@@ -52,6 +52,20 @@ function List() {
   );
 }
 
+function Search() {
+  return (
+<div>
+        <button
+          onClick={(e) => {
+            console.log(e.target.value);
+          }}
+        >
+          Save data
+        </button>
+      </div>
+  )
+}
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -65,15 +79,7 @@ function App() {
       <input id="search" type="text" placeholder="Fill the data" />
       <hr />
       <List />
-      <div>
-        <button
-          onClick={(e) => {
-            console.log(e.target.value);
-          }}
-        >
-          Save data
-        </button>
-      </div>
+      <Search />
     </>
   );
 }
