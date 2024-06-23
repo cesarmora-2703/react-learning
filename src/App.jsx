@@ -25,11 +25,11 @@ const list1 = [
   },
 ];
 
-function getText(text) {
+const getText = (text) => {
   return text;
 }
 
-function List() {
+const List = () => {
   return (
     <div>
       <ul>
@@ -52,7 +52,7 @@ function List() {
   );
 }
 
-function Search() {
+const Search = () => {
   return (
 <div>
         <button
@@ -66,7 +66,8 @@ function Search() {
   )
 }
 
-function App() {
+// arrow function expression refactring
+const App = () => {
   const [count, setCount] = useState(0);
 
   return (
