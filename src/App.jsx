@@ -15,7 +15,7 @@ function App() {
           console.log(e.target.value);
         }}
       >
-        Save
+        Save data
       </button>
     </>
   );
