@@ -27,7 +27,7 @@ const list1 = [
 
 const getText = (text) => {
   return text;
-}
+};
 
 const List = () => {
   return (
@@ -50,39 +50,39 @@ const List = () => {
       </ul>
     </div>
   );
-}
+};
 
 const Search = () => {
+  const handleChange = (event) => {
+    event.preventDefault()
+  // synthetic event
+  console.log(event)
+  // value of target (here: input HTML element)
+  console.log(event.target.value)
+  }
+
   return (
-<div>
-        <button
-          onClick={(e) => {
-            console.log(e.target.value);
-          }}
-        >
-          Save data
-        </button>
-      </div>
-  )
-}
+    <div>
+      <label htmlFor="Search">Search: </label>
+      <input id="search" type="text" placeholder="Fill the data"
+      onChange={handleChange} />
+    </div>
+  );
+};
 
 // arrow function expression refactring
 const App = () => {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <h1>
         {getText(sayHello.greet)} The road to {sayHello.title}
       </h1>
       <h1>My hacker Stories</h1>
-      <label htmlFor="Search">Search: </label>
-      <input id="search" type="text" placeholder="Fill the data" />
       <hr />
       <List />
       <Search />
     </>
   );
-}
+};
 
 export default App;
