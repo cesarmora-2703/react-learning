@@ -70,17 +70,21 @@ const Item = (props) => (
 );
 
 const Search = () => {
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleChange = (event) => {
+    setSearchTerm(event.titlearget.value)
+  }
+
   return (
     <>
       <label htmlFor="Search">Search: </label>
-      <input id="search" type="text" placeholder="Fill the data" />
-      <button
-        onClick={(e) => {
-          console.log(e.target.value);
-        }}
-      >
-        Save data
-      </button>
+      <input id="search" type="text"
+       placeholder="Fill the data" onChange={handleChange}/>
+      <p>
+        Searching for: <strong>{searchTerm}</strong>
+      </p>
     </>
-  );
-};
+  )
+}
