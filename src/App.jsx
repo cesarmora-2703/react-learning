@@ -3,6 +3,8 @@ import "./App.css";
 
 // arrow function expression refactring
 const App = () => {
+  console.log("App component renders");
+
   const stories = [
     {
       title: "React",
@@ -47,6 +49,7 @@ const getText = (text) => {
 };
 
 const List = (props) => {
+  console.log("List component renders");
   //with explicit return
   return (
     <ul>
@@ -57,8 +60,10 @@ const List = (props) => {
 };
 
 
-const Item = (props) => (
+const Item = (props) => {
+  console.log("Item component renders");
   //with implicit return
+  return(
   <li>
     <span>
       <a href={props.item.url}>{props.item.title}</a>
@@ -66,15 +71,17 @@ const Item = (props) => (
     <span> {props.item.author} </span>
     <span> {props.item.num_comments} </span>
     <span> {props.item.points} </span>
-  </li>
-);
+  </li>)
+}
+
 
 const Search = () => {
-
+  console.log("Search component renders");
+  
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleChange = (event) => {
-    setSearchTerm(event.titlearget.value)
+    setSearchTerm(event.target.value)
   }
 
   return (
