@@ -3,7 +3,8 @@ import "./App.css";
 
 // arrow function expression refactring
 const App = () => {
-  console.log("App component renders");
+
+  const [searchTerm, setSearchTerm] = useState('')
 
   const stories = [
     {
@@ -28,6 +29,12 @@ const App = () => {
     console.log(event.target.value)
 
   } 
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value)
+
+    props.onSearch(event)
+  }
 
   return (
     <>
@@ -54,7 +61,7 @@ const getText = (text) => {
 };
 
 const List = (props) => {
-  console.log("List component renders");
+
   //with explicit return
   return (
     <ul>
@@ -66,7 +73,7 @@ const List = (props) => {
 
 
 const Item = (props) => {
-  console.log("Item component renders");
+
   //with implicit return
   return(
   <li>
@@ -81,21 +88,12 @@ const Item = (props) => {
 
 
 const Search = (props) => {
-  console.log("Search component renders");
-  
-  const [searchTerm, setSearchTerm] = useState('')
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value)
-
-    props.onSearch(event)
-  }
 
   return (
     <>
       <label htmlFor="Search">Search: </label>
       <input id="search" type="text"
-       placeholder="Fill the data" onChange={handleChange}/>
+       placeholder="Fill the data" onChange={props.onSearch}/>
       <p>
         Searching for: <strong>{searchTerm}</strong>
       </p>
