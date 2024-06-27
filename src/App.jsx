@@ -24,13 +24,18 @@ const App = () => {
     },
   ];
 
+  const handleSearch = (event) => {
+    console.log(event.target.value)
+
+  } 
+
   return (
     <>
       <h1>
         {getText(sayHello.greet)} The road to {sayHello.title}
       </h1>
       <h1>My hacker Stories</h1>
-      <Search />
+      <Search onSearch={handleSearch} />
       <hr />
       <List list={stories} />
     </>
@@ -75,13 +80,15 @@ const Item = (props) => {
 }
 
 
-const Search = () => {
+const Search = (props) => {
   console.log("Search component renders");
   
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value)
+
+    props.onSearch(event)
   }
 
   return (
