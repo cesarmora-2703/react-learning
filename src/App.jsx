@@ -3,9 +3,6 @@ import "./App.css";
 
 // arrow function expression refactring
 const App = () => {
-
-  const [searchTerm, setSearchTerm] = useState('')
-
   const stories = [
     {
       title: "React",
@@ -25,16 +22,21 @@ const App = () => {
     },
   ];
 
-  const handleSearch = (event) => {
-    console.log(event.target.value)
+  const [searchTerm, setSearchTerm] = useState("");
 
-  } 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const searchedStories = stories.filter((story) =>
+    story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleChange = (event) => {
-    setSearchTerm(event.target.value)
+    setSearchTerm(event.target.value);
 
-    props.onSearch(event)
-  }
+    props.onSearch(event);
+  };
 
   return (
     <>
@@ -44,7 +46,7 @@ const App = () => {
       <h1>My hacker Stories</h1>
       <Search onSearch={handleSearch} />
       <hr />
-      <List list={stories} />
+      <List list={searchedStories} />
     </>
   );
 };
@@ -61,42 +63,40 @@ const getText = (text) => {
 };
 
 const List = (props) => {
-
   //with explicit return
   return (
     <ul>
       {props.list.map((item) => (
         <Item key={item.objectID} item={item} />
       ))}
-    </ul> )
+    </ul>
+  );
 };
 
-
 const Item = (props) => {
-
   //with implicit return
-  return(
-  <li>
-    <span>
-      <a href={props.item.url}>{props.item.title}</a>
-    </span>
-    <span> {props.item.author} </span>
-    <span> {props.item.num_comments} </span>
-    <span> {props.item.points} </span>
-  </li>)
-}
-
+  return (
+    <li>
+      <span>
+        <a href={props.item.url}>{props.item.title}</a>
+      </span>
+      <span> {props.item.author} </span>
+      <span> {props.item.num_comments} </span>
+      <span> {props.item.points} </span>
+    </li>
+  );
+};
 
 const Search = (props) => {
-
   return (
     <>
       <label htmlFor="Search">Search: </label>
-      <input id="search" type="text"
-       placeholder="Fill the data" onChange={props.onSearch}/>
-      <p>
-        Searching for: <strong>{searchTerm}</strong>
-      </p>
+      <input
+        id="search"
+        type="text"
+        placeholder="Fill the data"
+        onChange={props.onSearch}
+      />
     </>
-  )
-}
+  );
+};
