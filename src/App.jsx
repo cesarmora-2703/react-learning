@@ -59,14 +59,12 @@ const Search = ({ search, onSearch }) => (
 
 const List = ({ list }) => (
   <ul>
-    {list.map((item) => (
+    {" "}
+    {/* rest operator*/}
+    {list.map(({ objectID, ...item }) => (
       <Item
         key={item.objectID}
-        title={item.title}
-        url={item.url}
-        author={item.author}
-        num_comments={item.num_comments}
-        points={item.points}
+        {...item} // spread operator
       />
     ))}
   </ul>
