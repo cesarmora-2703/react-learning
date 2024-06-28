@@ -38,7 +38,7 @@ const App = () => {
         {getText(sayHello.greet)} The road to {sayHello.title}
       </h1>
       <h1>My hacker Stories</h1>
-      <Search onSearch={handleSearch} />
+      <Search search={searchTerm} onSearch={handleSearch} />
       <hr />
       <List list={searchedStories} />
     </>
@@ -89,6 +89,7 @@ const Search = (props) => {
         id="search"
         type="text"
         placeholder="Fill the data"
+        value={props.search}
         onChange={props.onSearch}
       />
     </>
