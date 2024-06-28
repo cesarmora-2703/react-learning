@@ -65,14 +65,14 @@ const List = ({ list }) => (
   </ul>
 );
 
-const Item = ({ item: { url, title, author, num_comments, points } }) => (
+const Item = ({ item }) => (
   //nested deconstruction
   <li>
     <span>
-      <a href={url}> {title}</a>
+      <a href={item.url}> {item.title}</a>
     </span>
-    <span> {author} </span>
-    <span> {num_comments} </span>
-    <span> {points} </span>
+    <span> {item.author} </span>
+    <span> {item.num_comments} </span>
+    <span> {item.Itempoints} </span>
   </li>
 );
