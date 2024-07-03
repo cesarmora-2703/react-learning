@@ -42,28 +42,53 @@ const App = () => {
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const [isOpen, setOpen] = useState(false);
+  const [count, setCount] = useState(0);
+  const handleOpen = () => {
+    setCount(count + 1);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setCount(count + 1);
+    setOpen(false);
+  };
+
   return (
     <>
       <h1>My hacker Stories</h1>
-      <Search search={searchTerm} onSearch={handleSearch} />
+      <InputWithLabel
+        id="search"
+        label="Search"
+        value={searchTerm}
+        onInputChange={handleSearch}
+      />
       <hr />
       <List list={searchedStories} />
+      <div>
+        <Button onClick={handleOpen}>Open</Button>
+        <Button onClick={handleClose}>Close</Button>
+        {count} {isOpen ? <div> Open </div> : <div> Close </div>}
+      </div>
     </>
   );
 };
 
 export default App;
 
-const Search = ({ search, onSearch }) => (
+const Button = ({ type = "button", onClick, children }) => {
+  return (
+    <button type={type} onClick={onClick}>
+      {children}
+    </button>
+  );
+};
+
+const InputWithLabel = ({ id, label, type = "text", value, onInputChange }) => (
   <>
-    <label htmlFor="Search">Search: </label>
-    <input
-      id="search"
-      type="text"
-      placeholder="Fill the data"
-      value={search}
-      onChange={onSearch}
-    />
+    <label htmlFor={id}>{label}: </label>
+    &nbsp;
+    <input id={id} type={type} value={value} onChange={onInputChange} />
   </>
 );
 
