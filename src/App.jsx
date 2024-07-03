@@ -42,6 +42,7 @@ const App = () => {
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const [value, setValue] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [count, setCount] = useState(0);
   const handleOpen = () => {
@@ -50,8 +51,12 @@ const App = () => {
   };
 
   const handleClose = () => {
-    setCount(count + 1);
+    setCount(count - 1);
     setOpen(false);
+  };
+
+  const handleChange = () => {
+    setValue(!value);
   };
 
   return (
@@ -65,16 +70,30 @@ const App = () => {
       />
       <hr />
       <List list={searchedStories} />
+      // Button
       <div>
         <Button onClick={handleOpen}>Open</Button>
         <Button onClick={handleClose}>Close</Button>
         {count} {isOpen ? <div> Open </div> : <div> Close </div>}
+      </div>
+      // Radio button
+      <div>
+        <RadioButton label="Cat" value={value} onChange={handleChange} />
       </div>
     </>
   );
 };
 
 export default App;
+
+const RadioButton = ({ label, value, onChange }) => {
+  return (
+    <label>
+      <input type="radio" checked={value} onChange={onChange} />
+      {label}
+    </label>
+  );
+};
 
 const Button = ({ type = "button", onClick, children }) => {
   return (
