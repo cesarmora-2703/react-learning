@@ -1,4 +1,5 @@
 import { useState, useEffect, cloneElement } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "./App.css";
 //custom hook
 const useStorageState = (key, initialState) => {
@@ -11,6 +12,24 @@ const useStorageState = (key, initialState) => {
   return [value, setValue];
 };
 
+// Drag and drop
+const INITIAL_LIST = [
+  {
+    id: "1",
+    firstName: "Robin",
+    lastName: "Wieruch",
+  },
+  {
+    id: "2",
+    firstName: "Aiden",
+    lastName: "Kettel",
+  },
+  {
+    id: "3",
+    firstName: "Jannet",
+    lastName: "Layn",
+  },
+];
 // arrow function expression refactring
 const App = () => {
   const stories = [
@@ -76,12 +95,23 @@ const App = () => {
     setChecked(!checked);
   };
 
+  {
+    /* Drag and drop */
+  }
+  const [list, setList] = useState(INITIAL_LIST);
+  const handleDragEnd = ({ destination, source }) => {
+    //reorder list
+    if (!destination) return;
+
+    setList(reorder(list, source.index, destination.index));
+  };
+
   return (
     <>
       <h1>My hacker Stories</h1>
       <InputWithLabel
         id="search"
-        label="Search"
+        label="Search:"
         value={searchTerm}
         onInputChange={handleSearch}
       />
@@ -103,6 +133,10 @@ const App = () => {
 
         <p>Is "My Value" checked? {checked.toString()}</p>
       </div>
+      //Drag and drop
+      <div>
+        <ListDnD list={list} onDragEnd={handleDragEnd} />
+      </div>
       // Dropdown2
       <Dropdown
         trigger={<button>Dropdown</button>}
@@ -116,6 +150,34 @@ const App = () => {
 };
 
 export default App;
+
+const ItemDnD = ({ index, item }) => (
+  <Draggable index={index} draggableId={item.id}>
+    {(provided, snapshot) => (
+      <div
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+      >
+        {item.firstName} {item.lastName}
+      </div>
+    )}
+  </Draggable>
+);
+
+const ListDnD = ({ list, onDragEnd }) => (
+  <DragDropContext onDragEnd={onDragEnd}>
+    <Droppable droppableId="droppable">
+      {(provided) => (
+        <div ref={provided.innerRef} {...provided.droppableProps}>
+          {list.map((item, index) => (
+            <ItemDnD key={item.id} index={index} item={item} />
+          ))}
+        </div>
+      )}
+    </Droppable>
+  </DragDropContext>
+);
 
 const Dropdown = ({ trigger, menu }) => {
   const [openDrp, setOpenDrp] = useState(false);
@@ -174,7 +236,7 @@ const Button = ({ type = "button", onClick, children }) => {
 
 const InputWithLabel = ({ id, label, type = "text", value, onInputChange }) => (
   <>
-    <label htmlFor={id}>{label}: </label>
+    <label htmlFor={id}>{label}</label>
     &nbsp;
     <input id={id} type={type} value={value} onChange={onInputChange} />
   </>
