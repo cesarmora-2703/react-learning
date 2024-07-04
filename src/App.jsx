@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, cloneElement } from "react";
 import "./App.css";
 //custom hook
 const useStorageState = (key, initialState) => {
@@ -42,6 +42,19 @@ const App = () => {
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // dropdown
+
+  const handleMenuOne = () => {
+    // do something
+    console.log("Clicked one");
+  };
+
+  const handleMenuTwo = () => {
+    // do something
+    console.log("Clicked two");
+  };
+
+  const [checked, setChecked] = useState(false);
   const [value, setValue] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [count, setCount] = useState(0);
@@ -57,6 +70,10 @@ const App = () => {
 
   const handleChange = () => {
     setValue(!value);
+  };
+
+  const handleChangeChk = () => {
+    setChecked(!checked);
   };
 
   return (
@@ -80,11 +97,63 @@ const App = () => {
       <div>
         <RadioButton label="Cat" value={value} onChange={handleChange} />
       </div>
+      // Checkbox
+      <div>
+        <Checkbox label="My Value" value={checked} onChange={handleChangeChk} />
+
+        <p>Is "My Value" checked? {checked.toString()}</p>
+      </div>
+      // Dropdown2
+      <Dropdown
+        trigger={<button>Dropdown</button>}
+        menu={[
+          <button onClick={handleMenuOne}>Menu 1</button>,
+          <button onClick={handleMenuTwo}>Menu 2</button>,
+        ]}
+      />
     </>
   );
 };
 
 export default App;
+
+const Dropdown = ({ trigger, menu }) => {
+  const [openDrp, setOpenDrp] = useState(false);
+
+  const handleOpenDrp = () => {
+    setOpenDrp(!openDrp);
+  };
+  return (
+    <div className="dropdown">
+      {cloneElement(trigger, {
+        onClick: handleOpenDrp,
+      })}
+      {setOpenDrp ? (
+        <ul className="menu">
+          {menu.map((menuItem, index) => (
+            <li key={index} className="menu-item">
+              {cloneElement(menuItem, {
+                onClick: () => {
+                  menuItem.props.onClick();
+                  setOpenDrp(false);
+                },
+              })}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+};
+
+const Checkbox = ({ label, value, onChange }) => {
+  return (
+    <label>
+      <input type="checkbox" checked={value} onChange={onChange} />
+      {label}
+    </label>
+  );
+};
 
 const RadioButton = ({ label, value, onChange }) => {
   return (
